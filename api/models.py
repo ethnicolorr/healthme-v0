@@ -11,13 +11,13 @@ class TypeBase(models.Model):
 
 
 class ProcedureType(TypeBase):
-    icon = models.ImageField(default='images/doctor.svg')
-    icon_pink = models.ImageField(default='images/doctor_pink.svg')
+    icon = models.ImageField(default='images/procedure/doctor.svg')
+    icon_pink = models.ImageField(default='images/procedure/doctor_pink.svg')
 
 
 class NoteType(TypeBase):
-    icon = models.ImageField(default='images/pill.svg')
-    icon_birch = models.ImageField(default='images/pill_birch.svg')
+    icon = models.ImageField(default='images/procedure/pill.svg')
+    icon_birch = models.ImageField(default='images/procedure/pill_birch.svg')
 
 
 # class Procedure(models.Model):
