@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
+from django.contrib.auth.models import PermissionsMixin
 
 
 class UserManager(BaseUserManager):
@@ -34,11 +35,18 @@ class UserManager(BaseUserManager):
             password=password
         )
         user.is_admin = True
+        user.is_staff = True
         user.save(using=self._db)
         return user
 
+    def has_perm(self, perm, obj=None):
+        return self.is_superuser
 
-class User(AbstractBaseUser):
+    def has_module_perms(self, app_label):
+        return self.is_superuser
+
+
+class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         max_length=255,
         unique=True
@@ -49,11 +57,12 @@ class User(AbstractBaseUser):
     pic = models.CharField(max_length=16, default="Jessica")
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
 
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['first_name', 'sex', 'date_of_birth']
 
     def __str__(self):
         return self.email

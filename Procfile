@@ -1,1 +1,1 @@
-web: gunicorn HealthMe.wsgi
+web: gunicorn healthme.wsgi
