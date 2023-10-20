@@ -1,3 +1,6 @@
+from datetime import date
+
+from django.core.validators import MaxValueValidator, RegexValidator
 from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
@@ -51,9 +54,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         max_length=255,
         unique=True
     )
-    first_name = models.CharField(max_length=255)
-    date_of_birth = models.DateField()
-    sex = models.CharField(max_length=1)  # 1m, 2f
+    first_name = models.CharField(max_length=64)
+    date_of_birth = models.DateField(validators=[MaxValueValidator(limit_value=date.today)])
+    sex = models.CharField(max_length=1, validators=[RegexValidator('[1,2]')])  # 1m, 2f
     pic = models.CharField(max_length=16, default="Jessica")
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
